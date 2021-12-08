@@ -75,7 +75,6 @@
                     </router-link>
                 </div>
                 <!-- <div class="card-body">
-                    <router-link to="Cronograma"></router-link>
                     <div class="row" v-if="cronogramaActualizado()">
                         <div v-for="(mes,i) in fechas" :key="i" class="col-12 col-sm-6 col-lg-4 my-2">
                             <div class="row m-auto border border-light">
