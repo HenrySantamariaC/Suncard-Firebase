@@ -67,36 +67,20 @@
                             </select>
                         </div>
                     </div>
-                    <a class="btn btn-dark bg-6 text-white " @click="calcularFechas()">
+                    <a class="btn btn-dark bg-6 text-white" @click="calcularCalendarioPagos(anio)">
                         Actualizar
                     </a>
-                    <router-link class="btn btn-dark bg-6 text-white " :to="{name:'Cronograma',params:{fechas,anio}}">
+                    <router-link class="btn btn-dark bg-6 text-white " :to="{name:'Cronograma'}">
                         Ver cronograma de pagos del {{anio}}
                     </router-link>
                 </div>
-                <!-- <div class="card-body">
-                    <div class="row" v-if="cronogramaActualizado()">
-                        <div v-for="(mes,i) in fechas" :key="i" class="col-12 col-sm-6 col-lg-4 my-2">
-                            <div class="row m-auto border border-light">
-                                <h5 class="m-0 text-capitalize">{{mes.mes}}</h5>
-                                <div class="row m-0 p-0">
-                                    <p class="col-6 my-0 border border-light">F.Cierre</p>
-                                    <p class="col-6 my-0 border border-light">F.Pago</p>
-                                </div>
-                                <div class="row m-0 p-0" >
-                                    <p class="col-6 my-0 bg-5 border border-light text-capitalize">{{mes.cierre.format("DD MMM")}}</p>
-                                    <p class="col-6 my-0 bg-4 border border-light text-capitalize">{{mes.pago.format("DD MMM")}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
 </template>
 <script>
 import moment from 'moment'
+import { mapState, mapActions } from "vuex";;
 
 export default {
     name: 'Inicio',
@@ -111,9 +95,11 @@ export default {
         actual : {},
         siguiente : {},
         diasRestantes : 0
-      },
-      fechas: []
+      }
     };
+  },
+  computed: {
+      ...mapState('Calendario',['meses'])
   },
   methods: {
     cargarFechaActual() {
@@ -121,14 +107,6 @@ export default {
         this.mesActual.hoy = moment().format('D [de] MMMM [del] YYYY');
         this.mesActual.anio = moment().get('year');
     }, 
-    calcularFechas() {
-        this.fechas = []
-        for (let i = 0; i < 12; i++) {
-            let fecha = this.calcularMes(i,this.anio)
-            this.fechas.push(fecha)
-        }      
-        this.diasRestantes()
-    },
     calcularMes(i,anio){
         let fc = moment().locale("es")
         fc.set('month',i)
@@ -177,13 +155,12 @@ export default {
         this.mesActual.actual = actual
         this.mesActual.siguiente = siguiente
     },
-    capitalize(word) {
-        return word[0].toUpperCase() + word.slice(1);
-    }
+    ...mapActions('Calendario',['calcularCalendarioPagos'])
   },
   created() {
     this.cargarFechaActual();
     this.diasRestantes();
+    this.$store.dispatch('Calendario/calcularCalendarioPagos',this.anio)
   }
 }
 </script>

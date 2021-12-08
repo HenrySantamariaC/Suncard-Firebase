@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div v-for="(mes,i) in fechas" :key="i" class="col-12 col-sm-6 col-lg-4 my-2">
+                        <div v-for="(mes,i) in meses" :key="i" class="col-12 col-sm-6 col-lg-4 my-2">
                             <div class="row m-auto border border-light">
                                 <h5 class="m-0 text-capitalize">{{mes.mes}}</h5>
                                 <div class="row m-0 p-0">
@@ -27,11 +27,21 @@
     </div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex"
 export default {
     name: 'Cronograma',
-    props: {
-        fechas : [],
-        anio : 0
+    computed: {
+        ...mapState('Calendario',['meses','anio'])
+    },
+    methods: {
+        ...mapActions('Calendario',['calcularCalendarioPagos']),
+        getYear(){
+            let year = new Date()
+            return year.getFullYear()
+        }
+    },
+    created(){
+        this.$store.dispatch('Calendario/calcularCalendarioPagos',this.getYear())
     }
 }
 </script>
