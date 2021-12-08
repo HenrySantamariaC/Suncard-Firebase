@@ -1,4 +1,4 @@
-# cronograma-tarjeta
+# Administrador de pagos
 
 ## Project setup
 ```
