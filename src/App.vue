@@ -38,4 +38,7 @@ body {
 .bg-6 {
   background: linear-gradient(45deg, #1B9DB0 0%, #2BADBF 100%) !important;
 }
+.bg-7 {
+  background: #222A3F !important;
+}
 </style>

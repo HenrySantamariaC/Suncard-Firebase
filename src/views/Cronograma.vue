@@ -8,15 +8,25 @@
                 <div class="card-body">
                     <div class="row">
                         <div v-for="(mes,i) in meses" :key="i" class="col-12 col-sm-6 col-lg-4 my-2">
-                            <div class="row m-auto border border-light">
-                                <h5 class="m-0 text-capitalize">{{mes.mes}}</h5>
-                                <div class="row m-0 p-0">
-                                    <p class="col-6 my-0 border border-light">F.Cierre</p>
-                                    <p class="col-6 my-0 border border-light">F.Pago</p>
+                            <div class="card shadow bg-3 fw-bold">
+                                <div class="row py-3">
+                                    <h2 class="text-capitalize">{{mes.mes}}</h2>
                                 </div>
-                                <div class="row m-0 p-0" >
-                                    <p class="col-6 my-0 bg-5 border border-light text-capitalize">{{mes.cierre.format("DD MMM")}}</p>
-                                    <p class="col-6 my-0 bg-4 border border-light text-capitalize">{{mes.pago.format("DD MMM")}}</p>
+                                <div class="row p-2">
+                                    <div class="col-6 text-align-center">
+                                        <p>Cierre</p>
+                                        <div class="bg-white rounded-3 overflow-hidden">
+                                            <div class="bg-5 pt-2 text-capitalize">{{mes.cierre.format("MMM")}}</div>
+                                            <div class="py-2 text-capitalize text-body">{{mes.cierre.format("DD")}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>Pago</p>
+                                        <div class="bg-white rounded-3 overflow-hidden">
+                                            <div class="bg-4 pt-2 text-capitalize">{{mes.pago.format("MMM")}}</div>
+                                            <div class="py-2 text-capitalize text-body">{{mes.pago.format("DD")}}</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +51,7 @@ export default {
         }
     },
     created(){
-        this.$store.dispatch('Calendario/calcularCalendarioPagos',this.getYear())
+        // this.$store.dispatch('Calendario/calcularCalendarioPagos',this.getYear())
     }
 }
 </script>

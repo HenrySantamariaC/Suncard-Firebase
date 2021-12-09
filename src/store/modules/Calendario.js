@@ -15,17 +15,17 @@ export default {
         }
     },
     actions: {
-        calcularCalendarioPagos({commit},anio) {
+        calcularCalendarioPagos({commit},{anio,diaCierre,diaPago}) {
             let fechas = []
             for (let i = 0; i < 12; i++) {
                 // Calculamos fechas de cierre y de pago
                 let fc = moment().locale("es")
                 fc.set('month',i)
                 fc.set('year',anio)
-                fc.set('date',this.cierre)
+                fc.set('date',diaCierre)
                 let fp = fc.clone();
                 fp.add(1,'M')
-                fp.set('date',this.pago)
+                fp.set('date',diaPago)
                 // Validamos si los dias de pago son dias laborables (Lunes a Viernes)
                 switch (fc.day()) {
                     case 6: fc.subtract(1,'d'); break;

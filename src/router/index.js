@@ -2,20 +2,30 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Inicio from '../views/Inicio.vue'
 import Cronograma from '../views/Cronograma.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Inicio',
-    component: Inicio
+    name: 'Login',
+    component: Login
   },
   {
     path: '/cronograma',
     name: 'Cronograma',
-    component: Cronograma,
-    props: true
+    component: Cronograma
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/inicio',
+    name: 'Inicio',
+    component: Inicio
   }
 ]
 

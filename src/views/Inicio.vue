@@ -54,7 +54,7 @@
                         </div>
                         <div class="form col-12 col-sm-6 col-lg-5">
                             <label for="diaPago"  class="mx-2 text-light">Dia de pago</label>
-                            <input type="number" class="form-control" id="diaPago" min="0" max="30" v-model="pago">
+                            <input type="number" class="form-control outline" id="diaPago" min="0" max="30" v-model="pago">
                         </div>
                         <div class="col">
                             <label for="anio"  class="mx-auto text-light">Año</label>
@@ -160,7 +160,7 @@ export default {
   created() {
     this.cargarFechaActual();
     this.diasRestantes();
-    this.$store.dispatch('Calendario/calcularCalendarioPagos',this.anio)
+    this.$store.dispatch('Calendario/calcularCalendarioPagos',{anio:this.anio,cierre:this.cierre,pago:this.pago})
   }
 }
 </script>
