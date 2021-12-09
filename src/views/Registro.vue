@@ -11,7 +11,7 @@
                         </div>
                         <div class="card-body p-1">
                             <h2 class="fw-bold">Bienvenido</h2>
-                            <h6>Inicia sesion para continuar</h6>
+                            <h6>Regístrese para continuar</h6>
                         </div>
                         <div class="card-body px-0 text-body">
                             <div class="form-floating col-12 col-md-10 mx-auto my-2 px-2">
@@ -23,11 +23,11 @@
                                 <label for="nombre" class="mx-2">Contraseña</label>
                             </div>
                             <div class="w-100 mt-4">
-                                <router-link class="bg-4 text-light mx-auto py-2 px-5 rounded-pill" :to="{name:'Inicio'}">Entrar</router-link>
+                                <router-link class="bg-4 text-light mx-auto py-2 px-5 rounded-pill" :to="{name:'Inicio'}">Registrar</router-link>
                             </div>
                         </div>
                         <div class="card-body py-4 my-3">
-                            <h6>¿Nuevo usuario? <router-link  :to="{name:'Registro'}" class="text-danger">Registrate</router-link></h6>
+                            <h6>¿Tienes cuenta? <router-link  :to="{name:'Login'}" class="text-danger">Inicia sesión</router-link></h6>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
 </template>
 <script>
 export default {
-    name: 'Login',
+    name: 'Registro',
     data: function () {
     return {
       }

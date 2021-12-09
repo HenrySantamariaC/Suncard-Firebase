@@ -29,18 +29,24 @@
                         </div>
                         <!-- Mes actual con sus fechas de facturacion y de pago -->
                         <div class="col-12 col-lg-7 pt-2">
-                            <div class="card shadow bg-3 fw-bold">
+                            <div class="card shadow bg-3 fw-bold mx-sm-4">
                                 <div class="row py-3">
                                     <h2 class="text-capitalize">{{mesActual.actual.mes}}</h2>
                                 </div>
-                                <div class="row p-3">
+                                <div class="row p-2">
                                     <div class="col-6 text-align-center">
-                                        <p>F.Cierre</p>
-                                        <p class="bg-5 rounded text-capitalize">{{mesActual.actual.cierre.format("DD MMM")}}</p>
+                                        <p>Cierre</p>
+                                        <div class="bg-white rounded-3 overflow-hidden w-75 mx-auto">
+                                            <div class="bg-5 pt-2 text-capitalize">{{mesActual.actual.cierre.format("MMM")}}</div>
+                                            <div class="py-2 text-capitalize text-body">{{mesActual.actual.cierre.format("DD")}}</div>
+                                        </div>
                                     </div>
                                     <div class="col-6">
-                                        <p>F.Pago</p>
-                                        <p class="bg-4 rounded text-capitalize">{{mesActual.actual.pago.format("DD MMM")}}</p>
+                                        <p>Pago</p>
+                                        <div class="bg-white rounded-3 overflow-hidden w-75 mx-auto">
+                                            <div class="bg-4 pt-2 text-capitalize">{{mesActual.actual.pago.format("MMM")}}</div>
+                                            <div class="py-2 text-capitalize text-body">{{mesActual.actual.pago.format("DD")}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +86,7 @@
 </template>
 <script>
 import moment from 'moment'
-import { mapState, mapActions } from "vuex";;
+import { mapState, mapActions } from "vuex"
 
 export default {
     name: 'Inicio',

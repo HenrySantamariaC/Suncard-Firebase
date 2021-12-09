@@ -41,4 +41,7 @@ body {
 .bg-7 {
   background: #222A3F !important;
 }
+.fs-7 {
+  font-size: 0.85rem !important;
+}
 </style>
