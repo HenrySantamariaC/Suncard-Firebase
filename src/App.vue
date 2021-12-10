@@ -49,9 +49,6 @@ body {
 .semi-rounded-top {
     border-radius: 1.5rem 1.5rem 0 0;
 }
-.semi-rounded-top {
-    border-radius: 1.5rem 1.5rem 0 0;
-}
 @media (min-width: 576px){
   .shadow-small {
       box-shadow: 0 .5rem 1rem rgba(0,0,0, .15) !important;
