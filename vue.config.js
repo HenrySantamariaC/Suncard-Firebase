@@ -3,10 +3,10 @@ module.exports = {
 
     pwa: {
       name: 'Administrador de pagos',
-      themeColor: '#222A3F',
-      msTileColor: '#222A3F',
+      themeColor: '#1C2135',
+      msTileColor: '#1C2135',
       manifestOptions: {
-        background_color: '#222A3F'
+        background_color: '#1C2135'
       }
     },
 

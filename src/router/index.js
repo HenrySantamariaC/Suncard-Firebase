@@ -19,11 +19,11 @@ const routes = [
     name: 'Cronograma',
     component: Cronograma
   },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: Login
+  // },
   {
     path: '/registro',
     name: 'Registro',

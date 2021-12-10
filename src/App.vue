@@ -15,7 +15,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 35px 0;
 }
 body {
   background: #222A3F !important;
@@ -44,4 +43,21 @@ body {
 .fs-7 {
   font-size: 0.85rem !important;
 }
+.semi-rounded-bottom {
+    border-radius: 0 0 1.5rem 1.5rem;
+}
+.semi-rounded-top {
+    border-radius: 1.5rem 1.5rem 0 0;
+}
+@media (min-width: 576px){
+  .shadow-small {
+      box-shadow: 0 .5rem 1rem rgba(0,0,0, .15) !important;
+  }
+}
+@media (max-width: 575px){
+  body {
+      background: #1C2135 !important;
+  }
+}
+
 </style>
