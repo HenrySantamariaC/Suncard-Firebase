@@ -1,5 +1,5 @@
 module.exports = {
-    publicPath: '/Cronograma/',
+    publicPath: '/SunCard/',
 
     pwa: {
       name: 'Administrador de pagos',
