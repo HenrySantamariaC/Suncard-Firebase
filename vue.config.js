@@ -2,7 +2,7 @@ module.exports = {
     publicPath: '/SunCard/',
 
     pwa: {
-      name: 'Administrador de pagos',
+      name: 'SunCard',
       themeColor: '#1C2135',
       msTileColor: '#1C2135',
       manifestOptions: {
@@ -14,7 +14,7 @@ module.exports = {
       config
           .plugin('html')
           .tap(args => {
-              args[0].title = "Administrador de pagos";
+              args[0].title = "SunCard";
               return args;
           })
   }

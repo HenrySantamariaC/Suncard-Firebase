@@ -5,6 +5,7 @@ import Cronograma from '../views/Cronograma.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
 import Tarjetas from '../views/Tarjetas.vue'
+import Tarjeta from '../views/Tarjeta.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/tarjetas',
     name: 'Tarjetas',
     component: Tarjetas
+  },
+  {
+    path: '/tarjeta',
+    name: 'Tarjeta',
+    component: Tarjeta
   },
   {
     path: '/inicio',
