@@ -5,9 +5,9 @@
 npm install
 ```
 ### Link de la pagina
-```
+
 [Administrador de Tarjetas](https://henrysantamariac.github.io/SunCard/).
-```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
