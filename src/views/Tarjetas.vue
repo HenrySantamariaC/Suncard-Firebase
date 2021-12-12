@@ -9,7 +9,7 @@
                     <div class="row d-flex justify-content-center">
                         <div class="row">
                             <span>Agregar</span>
-                            <router-link :to="{name:'Tarjeta'}" class="text-decoration-none"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">+</h6></router-link>
+                            <router-link :to="{name:'Tarjeta',params:{id:0}}" class="text-decoration-none"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">+</h6></router-link>
                         </div>
                     </div>
                 </div>
@@ -19,8 +19,10 @@
                         <div class="row">
                             <ul class="list-group w-100 p-0">
                                 <li class="list-group-item rounded-3 bg-7 my-1 mx-1 mx-sm-2 text-white shadow" v-for="(tarjeta,i) in tarjetas" :key="i">
-                                    <h6 class="fw-bold text-start">{{tarjeta}}</h6>
-                                    <h6 class="text-muted text-start fs-7 mx-2">Tarjeta registrada</h6>
+                                    <router-link :to="{name:'Tarjeta', params:{id:tarjeta.id}}" class="text-decoration-none text-white">
+                                        <h6 class="fw-bold text-start">{{tarjeta.name}}</h6>
+                                        <h6 class="text-muted text-start fs-7 mx-2">Tarjeta de crédito</h6>
+                                    </router-link>
                                 </li>
                             </ul>
                         </div>
@@ -38,17 +40,14 @@ export default {
     name: 'Inicio',
     data: function () {
     return {
-        tarjetas: [
-            'Tarjeta Visa',
-            'Tarjeta American Express',
-            'Tarjeta Mastercad',
-        ]
+        name:''
     };
   },
   computed: {
+      ...mapState('Tarjetas',['tarjetas']),
   },
   methods: {
-  },
+  }
 }
 </script>
 <style scoped> 

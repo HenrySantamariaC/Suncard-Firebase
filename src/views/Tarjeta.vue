@@ -7,45 +7,46 @@
                         <h3>{{tarjeta.name}}</h3>
                     </div>
                     <div class="row d-flex justify-content-center">
-                        <div class="row">
-                            <span>Guardar</span>
-                            <router-link :to="{name:'Inicio'}" class="text-decoration-none"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">&#128190;&#128465;</h6></router-link>
+                        <div class="col">
+                            <div @click="guardarData()"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">&#128190;</h6></div>
+                        </div><div class="col">
+                            <div @click="eliminarData()"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">&#128465;</h6></div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body px-0 text-body">
                     <div class="form-floating col-11 mx-auto my-2 px-2">
-                        <input type="text" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" " v-model="tarjeta.name">
+                        <input type="text" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" " required v-model="tarjeta.name">
                         <label for="nombre" class="mx-2">Nombre de la tarjeta</label>
                     </div>
                     <div class="col-11 mx-auto my-2 px-2">
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control border-0 border-bottom border-danger" id="cierre" placeholder=" ">
+                                    <input type="number" class="form-control border-0 border-bottom border-danger" id="cierre" placeholder=" " min="1" max="28" v-model="tarjeta.cierre">
                                     <label for="cierre" class="mx-2">Cierre</label>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control border-0 border-bottom border-danger" id="pago" placeholder=" ">
+                                    <input type="number" class="form-control border-0 border-bottom border-danger" id="pago" placeholder=" " min="1" max="28" v-model="tarjeta.pago">
                                     <label for="pago" class="mx-2">Pago</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body px-4 py-0">
+                <div class="card-body px-4 pb-4">
                     <div class="col-11 mx-auto">
-                        <h6 class="text-start text-muted fw-bold">Servicios a pagar</h6>
+                        <h6 class="text-start text-muted fw-bold">Servicios afiliados</h6>
                         <router-link :to="{name:''}" class="text-decoration-none">
-                            <div class="bg-6 text-white rounded-3 m-2 py-1 w-auto">
+                            <div class="bg-6 text-white rounded-3 my-2 py-1 w-auto">
                                 <span>Agregar servicio</span>
                             </div>
                         </router-link>
                         <div class="row">
                             <ul class="list-group w-100 p-0">
-                                <li class="list-group-item rounded-3 bg-7 my-1 mx-1 mx-sm-2 text-white shadow" v-for="(servicio,i) in servicios" :key="i">
+                                <li class="list-group-item rounded-3 bg-7 my-1 mx-1 mx-sm-2 text-white shadow" v-for="(servicio,i) in tarjeta.servicios" :key="i">
                                     <h6 class="fw-bold text-start">{{servicio}}</h6>
                                     <h6 class="text-muted text-start fs-7 mx-2">Sin pagar</h6>
                                 </li>
@@ -59,26 +60,58 @@
 </template>
 <script>
 import moment from 'moment'
-import { mapState, mapActions } from "vuex"
+import { mapState, mapActions, mapGetters } from "vuex"
 
 export default {
     name: 'Inicio',
     data: function () {
     return {
         tarjeta:{
-            name: 'Tarjeta Visa'
+            id:0,
+            name: 'Tarjeta Visa',
+            cierre: 22,
+            pago: 16,
+            servicios: []
         },
-        servicios: [
-            'Luz',
-            'Agua',
-            'Internet',
-        ]
+        creada: false        
     };
   },
+  props: [
+      'id'
+  ],
   computed: {
+    ...mapGetters('Tarjetas',['getTarjetaId']),
   },
   methods: {
+      ...mapActions('Tarjetas',['actualizarTarjeta','agregarTarjeta','eliminarTarjeta']),
+      entidadTarjeta(){
+          let temp = JSON.parse( JSON.stringify( this.getTarjetaId(this.$props.id) ) )
+          return temp
+      },
+      cargarTarjeta(){
+        this.tarjeta = this.entidadTarjeta()
+        if (Object.entries(this.tarjeta).length > 0) {
+            this.creada = true
+        }
+      },
+      guardarData(){
+          if (this.creada) {
+              this.actualizarTarjeta(this.tarjeta)
+          }else {
+              this.agregarTarjeta(this.tarjeta)
+          }
+          this.$router.push({name: "Tarjetas"});
+      },
+      eliminarData(){
+          if (this.creada) {
+              this.eliminarTarjeta(this.tarjeta)
+          }
+          this.$router.push({name: "Tarjetas"});
+      }
   },
+  created(){
+      this.cargarTarjeta()
+  }
 }
 </script>
 <style scoped> 

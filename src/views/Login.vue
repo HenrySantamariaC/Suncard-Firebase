@@ -13,19 +13,19 @@
                             <h2 class="fw-bold">Bienvenido</h2>
                             <h6>Inicia sesion para continuar</h6>
                         </div>
-                        <div class="card-body px-0 text-body">
+                        <form class="card-body px-0 text-body">
                             <div class="form-floating col-11 mx-auto my-2 px-2">
-                                <input type="text" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" ">
+                                <input type="text" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" " autocomplete="username">
                                 <label for="nombre" class="mx-2">Nombre</label>
                             </div>
                             <div class="form-floating col-11 mx-auto my-2 px-2">
-                                <input type="password" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" ">
+                                <input type="password" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " autocomplete="current-password">
                                 <label for="pass" class="mx-2">Contraseña</label>
                             </div>
                             <div class="w-100 mt-4">
                                 <router-link class="bg-4 text-light mx-auto py-2 px-5 rounded-pill" :to="{name:'Inicio'}">Entrar</router-link>
                             </div>
-                        </div>
+                        </form>
                         <div class="card-body py-4 my-3">
                             <h6>¿Nuevo usuario? <router-link  :to="{name:'Registro'}" class="text-danger">Registrate</router-link></h6>
                         </div>

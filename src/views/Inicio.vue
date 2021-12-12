@@ -1,15 +1,17 @@
 <template>
-    <div class="container">
-        <div class="row dark mx-1">
-            <div class="card text-white bg-1 shadow col-12 col-md-8 mx-auto px-0">
-                <div class="card-header">
-                    <h3>Administrador de pagos</h3>
+    <div class="container p-0 my-sm-4 py-sm-2">
+        <div class="row dark mx-auto">
+            <div class="card text-white bg-1 shadow-small col-12 col-sm-10 col-md-6 mx-auto px-0 border-0">
+                <div class="card-body bg-4 semi-rounded-bottom">
+                    <div class="row py-4">
+                        <h3>Administrador de pagos</h3>
+                    </div>
                 </div>
                 <div class="card-body px-4">
                     <!-- Fecha del dia de hoy -->
                     <div class="row pb-3">
-                        <p class="card-text my-0">Hoy</p>
-                        <h5 class="card-title text-capitalize">{{mesActual.hoy}}</h5>
+                        <p class="card-text my-0 fs-7">Hoy</p>
+                        <h5 class="card-title text-capitalize fs-6">{{mesActual.hoy}}</h5>
                     </div>
 
                     <div class="row">
@@ -29,56 +31,34 @@
                         </div>
                         <!-- Mes actual con sus fechas de facturacion y de pago -->
                         <div class="col-12 col-lg-7 pt-2">
-                            <div class="card shadow bg-3 fw-bold mx-sm-4">
-                                <div class="row py-3">
-                                    <h2 class="text-capitalize">{{mesActual.actual.mes}}</h2>
-                                </div>
-                                <div class="row p-2">
-                                    <div class="col-6 text-align-center">
-                                        <p>Cierre</p>
-                                        <div class="bg-white rounded-3 overflow-hidden w-75 mx-auto">
-                                            <div class="bg-5 pt-2 text-capitalize">{{mesActual.actual.cierre.format("MMM")}}</div>
-                                            <div class="py-2 text-capitalize text-body">{{mesActual.actual.cierre.format("DD")}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <p>Pago</p>
-                                        <div class="bg-white rounded-3 overflow-hidden w-75 mx-auto">
-                                            <div class="bg-4 pt-2 text-capitalize">{{mesActual.actual.pago.format("MMM")}}</div>
-                                            <div class="py-2 text-capitalize text-body">{{mesActual.actual.pago.format("DD")}}</div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="mx-sm-4">
+                                <CardMes :mes="mesActual.actual"></CardMes>
                             </div>
                         </div>
                     </div>
                     <!-- Formulario para ingresar los dias de cierre y pago -->
                     <div class="row py-3 text-body">
-                        <div class="form col-12 col-sm-6 col-lg-5">
-                            <label for="diaCierre" class="mx-2 text-light">Dia de cierre</label>
-                            <input type="number" class="form-control" id="diaCierre" min="0" max="30" v-model="cierre">
-                        </div>
-                        <div class="form col-12 col-sm-6 col-lg-5">
-                            <label for="diaPago"  class="mx-2 text-light">Dia de pago</label>
-                            <input type="number" class="form-control outline" id="diaPago" min="0" max="30" v-model="pago">
-                        </div>
-                        <div class="col">
-                            <label for="anio"  class="mx-auto text-light">Año</label>
-                            <select id="anio" class="form-control w-auto mx-auto" v-model="anio">
-                                <option 
-                                    class="m-0 p-0"
-                                    v-for="num in 5" :key="num"
-                                    :value="(mesActual.anio+num-1)">{{mesActual.anio+num-1}}
-                                </option>
-                            </select>
+                        <div class=" col rounded-3 bg-7 w-100 my-1 mx-1 mx-sm-2 py-2 text-white shadow">
+                            <div class="text-white">
+                                <h5 class="fw-bold text-start">Cronograma por año</h5>
+                                <div class="row">
+                                    <label for="anio"  class="col-5 text-light">Elija el año</label>
+                                    <select id="anio" class="form-control w-auto" v-model="anio">
+                                        <option 
+                                            class="m-0 p-0"
+                                            v-for="num in 5" :key="num"
+                                            :value="(mesActual.anio+num-1)">{{mesActual.anio+num-1}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="py-2">
+                                    <router-link class="btn btn-dark bg-6 text-white" :to="{name:'Calendario', params:{anio:anio}}">
+                                        Ver cronograma del {{anio}}
+                                    </router-link>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <a class="btn btn-dark bg-6 text-white" @click="calcularCalendarioPagos(anio)">
-                        Actualizar
-                    </a>
-                    <router-link class="btn btn-dark bg-6 text-white " :to="{name:'Cronograma'}">
-                        Ver cronograma de pagos del {{anio}}
-                    </router-link>
                 </div>
             </div>
         </div>
@@ -87,8 +67,10 @@
 <script>
 import moment from 'moment'
 import { mapState, mapActions } from "vuex"
+import CardMes from '../components/CardMes.vue';
 
 export default {
+    components: { CardMes },
     name: 'Inicio',
     data: function () {
     return {
@@ -114,6 +96,7 @@ export default {
         this.mesActual.anio = moment().get('year');
     }, 
     calcularMes(i,anio){
+        // Calculamos fechas de cierre y de pago
         let fc = moment().locale("es")
         fc.set('month',i)
         fc.set('year',anio)
@@ -121,7 +104,7 @@ export default {
         let fp = fc.clone();
         fp.add(1,'M')
         fp.set('date',this.pago)
-
+        // Validamos si los dias de pago son dias laborables (Lunes a Viernes)
         switch (fc.day()) {
             case 6: fc.subtract(1,'d'); break;
             case 0: fc.subtract(2,'d'); break;
@@ -130,7 +113,7 @@ export default {
             case 6: fp.add(2,'d'); break;
             case 0: fp.add(1,'d'); break;
         }
-
+        // Definimos objeto mes para el calendario de fechas
         let fecha = {
             mes: fc.format("MMMM").toString(),
             cierre: fc,
@@ -138,12 +121,6 @@ export default {
         }
 
         return fecha;
-    },
-    cronogramaActualizado(){
-        if (this.fechas.length > 0 && this.fechas[0].cierre.get('year') == this.anio) {
-            return true
-        }
-        return false
     },
     diasRestantes(){
         let now = moment();
@@ -166,7 +143,6 @@ export default {
   created() {
     this.cargarFechaActual();
     this.diasRestantes();
-    this.$store.dispatch('Calendario/calcularCalendarioPagos',{anio:this.anio,cierre:this.cierre,pago:this.pago})
   }
 }
 </script>

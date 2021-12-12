@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Inicio from '../views/Inicio.vue'
-import Cronograma from '../views/Cronograma.vue'
+import Calendario from '../views/Calendario.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
 import Tarjetas from '../views/Tarjetas.vue'
@@ -16,9 +16,10 @@ const routes = [
     component: Login
   },
   {
-    path: '/cronograma',
-    name: 'Cronograma',
-    component: Cronograma
+    path: '/calendario/:anio',
+    name: 'Calendario',
+    component: Calendario,
+    props: true
   },
   // {
   //   path: '/login',
@@ -36,9 +37,10 @@ const routes = [
     component: Tarjetas
   },
   {
-    path: '/tarjeta',
+    path: '/tarjeta/:id',
     name: 'Tarjeta',
-    component: Tarjeta
+    component: Tarjeta,
+    props: true
   },
   {
     path: '/inicio',

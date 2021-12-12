@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import Calendario from './modules/Calendario'
 import Usuario from './modules/Usuario'
+import Tarjetas from './modules/Tarjetas'
 
 Vue.use(Vuex)
 
@@ -14,7 +14,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    Calendario,
-    Usuario
+    Usuario,
+    Tarjetas
   }
 })
