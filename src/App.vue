@@ -43,6 +43,9 @@ body {
 .fs-7 {
   font-size: 0.85rem !important;
 }
+.fs-8 {
+  font-size: 0.6rem !important;
+}
 .semi-rounded-bottom {
     border-radius: 0 0 1.5rem 1.5rem;
 }

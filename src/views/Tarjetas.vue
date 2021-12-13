@@ -29,14 +29,17 @@
                     </div>
                 </div>
             </div>
+            <NavBar/>
         </div>
     </div>
 </template>
 <script>
 import moment from 'moment'
 import { mapState, mapActions } from "vuex"
+import NavBar from '../components/NavBar.vue'
 
 export default {
+    components: {NavBar},
     name: 'Inicio',
     data: function () {
     return {

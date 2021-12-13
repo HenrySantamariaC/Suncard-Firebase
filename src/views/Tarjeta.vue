@@ -8,9 +8,17 @@
                     </div>
                     <div class="row d-flex justify-content-center">
                         <div class="col">
-                            <div @click="guardarData()"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">&#128190;</h6></div>
+                            <div @click="guardarData()">
+                                <h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">
+                                    <span class="icon-floppy-disk"></span>
+                                </h6>
+                            </div>
                         </div><div class="col">
-                            <div @click="eliminarData()"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">&#128465;</h6></div>
+                            <div @click="eliminarData()">
+                                <h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">
+                                    <span class="icon-bin2"></span>
+                                </h6>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,14 +63,17 @@
                     </div>
                 </div>
             </div>
+            <NavBar/>
         </div>
     </div>
 </template>
 <script>
 import moment from 'moment'
 import { mapState, mapActions, mapGetters } from "vuex"
+import NavBar from '../components/NavBar.vue'
 
 export default {
+    components: {NavBar},
     name: 'Inicio',
     data: function () {
     return {

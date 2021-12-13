@@ -16,10 +16,9 @@ const routes = [
     component: Login
   },
   {
-    path: '/calendario/:anio',
+    path: '/calendario',
     name: 'Calendario',
-    component: Calendario,
-    props: true
+    component: Calendario
   },
   // {
   //   path: '/login',
@@ -34,13 +33,13 @@ const routes = [
   {
     path: '/tarjetas',
     name: 'Tarjetas',
-    component: Tarjetas
+    component: Tarjetas,
   },
   {
-    path: '/tarjeta/:id',
+    path: '/tarjetas/tarjeta/:id',
     name: 'Tarjeta',
     component: Tarjeta,
-    props: true
+    props: true,
   },
   {
     path: '/inicio',
@@ -50,7 +49,10 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
 
 export default router

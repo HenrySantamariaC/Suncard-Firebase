@@ -1,12 +1,14 @@
 export default {
     namespaced: true,
     state: {
+        editTarjeta:{},
         tarjetas: [
             {
                 id: 1,
                 name: 'Tarjeta Visa',
                 cierre: 22,
                 pago: 16,
+                anio: 2021,
                 servicios: [
                     'Luz',
                     'Agua',
@@ -19,6 +21,7 @@ export default {
                 name: 'Tarjeta American Express',
                 cierre: 20,
                 pago: 14,
+                anio: 2021,
                 servicios: [
                     'Luz',
                     'Agua',
@@ -31,6 +34,7 @@ export default {
                 name: 'Tarjeta Mastercad',
                 cierre: 18,
                 pago: 12,
+                anio: 2021,
                 servicios: [
                     'Luz',
                     'Agua',

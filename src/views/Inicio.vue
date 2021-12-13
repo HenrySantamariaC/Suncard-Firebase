@@ -40,43 +40,45 @@
                     <div class="row py-3 text-body">
                         <div class=" col rounded-3 bg-7 w-100 my-1 mx-1 mx-sm-2 py-2 text-white shadow">
                             <div class="text-white">
-                                <h5 class="fw-bold text-start">Cronograma por año</h5>
-                                <div class="row">
-                                    <label for="anio"  class="col-5 text-light">Elija el año</label>
-                                    <select id="anio" class="form-control w-auto" v-model="anio">
+                                <h5 class="fw-bold text-start">Elegir tarjeta</h5>
+                                <div class="input-group mb-2">
+                                    <label for="tarjeta"  class="input-group-text text-light bg-7 border-0">Tarjeta</label>
+                                    <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
                                         <option 
                                             class="m-0 p-0"
-                                            v-for="num in 5" :key="num"
-                                            :value="(mesActual.anio+num-1)">{{mesActual.anio+num-1}}
+                                            v-for="(item,i) in tarjetas" :key="i"
+                                            :value="item.id">{{item.name}}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="py-2">
-                                    <router-link class="btn btn-dark bg-6 text-white" :to="{name:'Calendario', params:{anio:anio}}">
-                                        Ver cronograma del {{anio}}
-                                    </router-link>
+                                    <div class="btn btn-dark bg-6 text-white" @click="verData">
+                                        Ver datos
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <NavBar/>
         </div>
     </div>
 </template>
 <script>
 import moment from 'moment'
-import { mapState, mapActions } from "vuex"
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex"
+import NavBar from '../components/NavBar.vue';
 import CardMes from '../components/CardMes.vue';
 
 export default {
-    components: { CardMes },
+    components: { CardMes, NavBar },
     name: 'Inicio',
     data: function () {
     return {
       anio: 2021,
-      cierre: 22,
-      pago: 16,
+      idTarjeta:1,
+      tarjeta: {},
       mesActual: {
         hoy : "",
         anio : 0,
@@ -87,23 +89,28 @@ export default {
     };
   },
   computed: {
-      ...mapState('Calendario',['meses'])
+        ...mapGetters('Tarjetas',['getTarjetaId']),
+        ...mapState('Tarjetas',['tarjetas']),
   },
   methods: {
+      ...mapActions('Calendario',['calcularCalendarioPagos']),
     cargarFechaActual() {
         moment.locale("es")
         this.mesActual.hoy = moment().format('D [de] MMMM [del] YYYY');
         this.mesActual.anio = moment().get('year');
+    },
+    cargarTarjeta(id){
+        this.tarjeta = JSON.parse( JSON.stringify( this.getTarjetaId(id) ) )
     }, 
     calcularMes(i,anio){
         // Calculamos fechas de cierre y de pago
         let fc = moment().locale("es")
         fc.set('month',i)
         fc.set('year',anio)
-        fc.set('date',this.cierre)
+        fc.set('date',this.tarjeta.cierre)
         let fp = fc.clone();
         fp.add(1,'M')
-        fp.set('date',this.pago)
+        fp.set('date',this.tarjeta.pago)
         // Validamos si los dias de pago son dias laborables (Lunes a Viernes)
         switch (fc.day()) {
             case 6: fc.subtract(1,'d'); break;
@@ -138,10 +145,14 @@ export default {
         this.mesActual.actual = actual
         this.mesActual.siguiente = siguiente
     },
-    ...mapActions('Calendario',['calcularCalendarioPagos'])
+    verData(){
+        this.cargarTarjeta(this.idTarjeta)
+        this.diasRestantes()
+    }
   },
   created() {
     this.cargarFechaActual();
+    this.cargarTarjeta(this.idTarjeta);
     this.diasRestantes();
   }
 }
