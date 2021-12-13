@@ -1,7 +1,6 @@
 export default {
     namespaced: true,
     state: {
-        editTarjeta:{},
         tarjetas: [
             {
                 id: 1,

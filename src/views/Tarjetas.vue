@@ -9,7 +9,11 @@
                     <div class="row d-flex justify-content-center">
                         <div class="row">
                             <span>Agregar</span>
-                            <router-link :to="{name:'Tarjeta',params:{id:0}}" class="text-decoration-none"><h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">+</h6></router-link>
+                            <router-link :to="{name:'Tarjeta',params:{id:0}}" class="text-decoration-none">
+                                <h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">
+                                    <span class="icon-plus"></span>
+                                </h6>
+                            </router-link>
                         </div>
                     </div>
                 </div>

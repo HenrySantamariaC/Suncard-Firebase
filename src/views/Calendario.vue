@@ -11,7 +11,7 @@
                     <div class="row rounded-3 bg-7 text-white p-2">
                         <div class="text-white">
                             <h5 class="fw-bold text-start">Cronograma por año</h5>
-                            <div class="input-group mb-2">
+                            <div class="input-group input-group-sm mb-2">
                                 <label for="tarjeta"  class="input-group-text text-light bg-7 border-0">Tarjeta</label>
                                 <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
                                     <option 
@@ -21,7 +21,7 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="input-group">
+                            <div class="input-group input-group-sm">
                                 <label for="anio"  class="input-group-text text-light bg-7 border-0">Año</label>
                                 <select id="anio" class="form-select bg-7 text-white dark" v-model="anio">
                                     <option 

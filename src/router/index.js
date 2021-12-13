@@ -12,19 +12,19 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: Login
+    name: 'Inicio',
+    component: Inicio
   },
   {
     path: '/calendario',
     name: 'Calendario',
     component: Calendario
   },
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: Login
-  // },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
   {
     path: '/registro',
     name: 'Registro',
@@ -41,11 +41,11 @@ const routes = [
     component: Tarjeta,
     props: true,
   },
-  {
-    path: '/inicio',
-    name: 'Inicio',
-    component: Inicio
-  }
+  // {
+  //   path: '/inicio',
+  //   name: 'Inicio',
+  //   component: Inicio
+  // }
 ]
 
 const router = new VueRouter({

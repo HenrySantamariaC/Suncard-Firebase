@@ -47,11 +47,12 @@
                 <div class="card-body px-4 pb-4">
                     <div class="col-11 mx-auto">
                         <h6 class="text-start text-muted fw-bold">Servicios afiliados</h6>
-                        <router-link :to="{name:''}" class="text-decoration-none">
-                            <div class="bg-6 text-white rounded-3 my-2 py-1 w-auto">
-                                <span>Agregar servicio</span>
+                        <div class="row">
+                            <div class="input-group my-2">
+                                <input type="text" aria-label="servicio" class="form-control" v-model="servicio" placeholder="Nuevo servicio">
+                                <div class="input-group-text bg-7 text-white" @click="agregarServicio()">Agregar</div>
                             </div>
-                        </router-link>
+                        </div>
                         <div class="row">
                             <ul class="list-group w-100 p-0">
                                 <li class="list-group-item rounded-3 bg-7 my-1 mx-1 mx-sm-2 text-white shadow" v-for="(servicio,i) in tarjeta.servicios" :key="i">
@@ -84,7 +85,8 @@ export default {
             pago: 16,
             servicios: []
         },
-        creada: false        
+        creada: false,
+        servicio: ''      
     };
   },
   props: [
@@ -104,6 +106,10 @@ export default {
         if (Object.entries(this.tarjeta).length > 0) {
             this.creada = true
         }
+      },
+      agregarServicio(){
+          this.tarjeta.servicios.push(this.servicio)
+          this.servicio = ''
       },
       guardarData(){
           if (this.creada) {

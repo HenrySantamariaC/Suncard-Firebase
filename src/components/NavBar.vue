@@ -1,6 +1,6 @@
 <template>
     <div class="py-4 py-md-3">
-        <nav class="navbar fixed-bottom navbar-dark bg-1">
+        <nav class="navbar fixed-bottom navbar-dark bg-7 shadow-lg">
             <div class="col-12 col-sm-10 col-md-6 mx-auto">
                 <div class="row w-100 mx-auto">
                     <router-link :to="{name:'Inicio'}" class="navbar-brand d-flex flex-column col-3 mx-0 bg-7">

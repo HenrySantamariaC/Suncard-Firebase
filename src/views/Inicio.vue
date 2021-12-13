@@ -41,7 +41,7 @@
                         <div class=" col rounded-3 bg-7 w-100 my-1 mx-1 mx-sm-2 py-2 text-white shadow">
                             <div class="text-white">
                                 <h5 class="fw-bold text-start">Elegir tarjeta</h5>
-                                <div class="input-group mb-2">
+                                <div class="input-group input-group-sm mb-2">
                                     <label for="tarjeta"  class="input-group-text text-light bg-7 border-0">Tarjeta</label>
                                     <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
                                         <option 
