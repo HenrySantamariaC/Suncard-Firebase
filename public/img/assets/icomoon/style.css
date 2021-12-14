@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?63tbg6');
-  src:  url('fonts/icomoon.eot?63tbg6#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?63tbg6') format('truetype'),
-    url('fonts/icomoon.woff?63tbg6') format('woff'),
-    url('fonts/icomoon.svg?63tbg6#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?y90tyg');
+  src:  url('fonts/icomoon.eot?y90tyg#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?y90tyg') format('truetype'),
+    url('fonts/icomoon.woff?y90tyg') format('woff'),
+    url('fonts/icomoon.svg?y90tyg#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -28,6 +28,9 @@
 .icon-home:before {
   content: "\e900";
 }
+.icon-profile:before {
+  content: "\e923";
+}
 .icon-credit-card:before {
   content: "\e93f";
 }
@@ -40,9 +43,21 @@
 .icon-user:before {
   content: "\e971";
 }
+.icon-cog:before {
+  content: "\e994";
+}
 .icon-bin2:before {
   content: "\e9ad";
 }
+.icon-link:before {
+  content: "\e9cb";
+}
 .icon-plus:before {
   content: "\ea0a";
+}
+.icon-enter:before {
+  content: "\ea13";
+}
+.icon-exit:before {
+  content: "\ea14";
 }
