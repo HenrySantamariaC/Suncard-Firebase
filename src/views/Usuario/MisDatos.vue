@@ -21,38 +21,33 @@
                         <h5 class="mx-2 text-muted text-start fw-bold">Datos personales</h5>
                     </div>
                     <div class="form-floating col-11 mx-auto my-2 px-2">
-                        <input type="text" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" " autocomplete="name">
+                        <input type="text" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" " autocomplete="name" v-model="user.name">
                         <label for="nombre" class="mx-2">Nombres</label>
                     </div>
                     <div class="form-floating col-11 mx-auto my-2 px-2">
-                        <input type="text" class="form-control border-0 border-bottom border-danger" id="apPat" placeholder=" " autocomplete="family-name">
+                        <input type="text" class="form-control border-0 border-bottom border-danger" id="apPat" placeholder=" " autocomplete="family-name" v-model="user.lasNameP">
                         <label for="apPat" class="mx-2">Apellido paterno</label>
                     </div>
                     <div class="form-floating col-11 mx-auto my-2 px-2">
-                        <input type="text" class="form-control border-0 border-bottom border-danger" id="apMat" placeholder=" " autocomplete="family-name">
+                        <input type="text" class="form-control border-0 border-bottom border-danger" id="apMat" placeholder=" " autocomplete="family-name" v-model="user.lasNameM">
                         <label for="apMat" class="mx-2">Apellido materno</label>
                     </div>
                     <div class="form-floating col-11 mx-auto my-2 px-2">
-                        <input type="date" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " autocomplete="current-password">
+                        <input type="email" class="form-control border-0 border-bottom border-danger" id="email" placeholder=" " autocomplete="email" disabled v-model="user.email">
+                        <label for="email" class="mx-2">Email</label>
+                    </div>
+                    <div class="form-floating col-11 mx-auto my-2 px-2">
+                        <input type="date" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " :value="user.birth">
                         <label for="pass" class="mx-2">Fecha de nacimiento</label>
                     </div>
                 </form>
-                <div class="card-body px-4 pb-4 d-none">
-                    <div class="col-11 mx-auto">
-                        <h6 class="text-start text-muted fw-bold">Servicios afiliados</h6>
+                <div class="card-body px-4 mx-2">
+                    <div class="row rounded-3 bg-7 text-white py-2">
+                        <h5 class="text-start text-muted fw-bold">Avatar</h5>
                         <div class="row">
-                            <div class="input-group my-2">
-                                <input type="text" aria-label="servicio" class="form-control" v-model="servicio" placeholder="Nuevo servicio">
-                                <div class="input-group-text bg-7 text-white" @click="agregarServicio()">Agregar</div>
+                            <div class="col-4 py-2" v-for="(item, i) in avatares" :key="i" @click="elegirAvatar(i)">
+                                <img :src="require(`@/assets/img/avatar-user/${item.name}`)" alt="img-avatar" class="img-fluid avatar" :class="{'rounded-circle br-red':item.selected}">
                             </div>
-                        </div>
-                        <div class="row">
-                            <ul class="list-group w-100 p-0">
-                                <li class="list-group-item rounded-3 bg-7 my-1 mx-1 mx-sm-2 text-white shadow" v-for="(servicio,i) in tarjeta.servicios" :key="i">
-                                    <h6 class="fw-bold text-start">{{servicio}}</h6>
-                                    <h6 class="text-muted text-start fs-7 mx-2">Sin pagar</h6>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -71,56 +66,41 @@ export default {
     name: 'MisDatos',
     data: function () {
     return {
-        tarjeta:{
-            id:0,
-            name: 'Tarjeta Visa',
-            cierre: 22,
-            pago: 16,
-            servicios: []
-        },
-        creada: false,
-        servicio: ''      
+        user: {},
+        avatares: [
+            {name: 'user-1.png', selected: false},
+            {name: 'user-2.png', selected: false},
+            {name: 'user-3.png', selected: false},
+            {name: 'user-4.png', selected: false},
+            {name: 'user-5.png', selected: false},
+            {name: 'user-6.png', selected: false},
+        ]
     };
   },
-  props: [
-      'id'
-  ],
+  props: [],
   computed: {
-    ...mapGetters('Tarjetas',['getTarjetaId']),
+      ...mapState('Usuario',['usuario']),
   },
   methods: {
-      ...mapActions('Tarjetas',['actualizarTarjeta','agregarTarjeta','eliminarTarjeta']),
-      entidadTarjeta(){
-          let temp = JSON.parse( JSON.stringify( this.getTarjetaId(this.$props.id) ) )
-          return temp
-      },
-      cargarTarjeta(){
-        this.tarjeta = this.entidadTarjeta()
-        if (Object.entries(this.tarjeta).length > 0) {
-            this.creada = true
-        }
-      },
-      agregarServicio(){
-          this.tarjeta.servicios.push(this.servicio)
-          this.servicio = ''
+      ...mapActions('Usuario',['actualizarUsuario']),
+      cargarData(){
+          this.user = JSON.parse( JSON.stringify( this.usuario ) )
+          this.avatares[this.user.avatar].selected = true
       },
       guardarData(){
-          if (this.creada) {
-              this.actualizarTarjeta(this.tarjeta)
-          }else {
-              this.agregarTarjeta(this.tarjeta)
-          }
-          this.$router.push({name: "Tarjetas"});
+          this.actualizarUsuario(this.user)
+          this.$router.push({name: "Usuario"});
       },
-      eliminarData(){
-          if (this.creada) {
-              this.eliminarTarjeta(this.tarjeta)
+      elegirAvatar(index){
+          for (let i = 0; i < this.avatares.length; i++) {
+            this.avatares[i].selected = false  
           }
-          this.$router.push({name: "Tarjetas"});
+          this.avatares[index].selected = true
+          this.user.avatar = index
       }
   },
   created(){
-      this.cargarTarjeta()
+      this.cargarData()
   }
 }
 </script>
@@ -130,5 +110,12 @@ export default {
         height: 40px !important;
         line-height: 40px;
         cursor: pointer;
+    }
+    .avatar {
+        max-width: 70px;
+        max-height: 70px;
+    }
+    .br-red {
+        border: 4px solid #F47226;
     }
 </style>

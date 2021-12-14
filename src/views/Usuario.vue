@@ -25,12 +25,12 @@
                             <span class="icon-profile me-2"></span>
                             <span>Mis datos</span>
                         </router-link>
-                        <router-link :to="{name:'Login'}" class="col-12 btn text-start text-white py-2">
+                        <router-link :to="{name:''}" class="col-12 btn text-start text-white py-2">
                             <span class="icon-cog me-2"></span>
                             <span>Configuraciones</span>
                         </router-link>
                         <hr class="my-1">
-                        <router-link :to="{name:'Login'}" class="col-12 btn text-start text-white py-2">
+                        <router-link :to="{name:''}" class="col-12 btn text-start text-white py-2">
                             <span class="icon-link me-2"></span>
                             <span>Acerca de</span>
                         </router-link>
