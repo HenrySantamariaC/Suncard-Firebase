@@ -6,7 +6,7 @@
                     <div class="card bg-1 col-sm-8 col-lg-6 col-xl-5 mx-auto px-0 border-0 text-white overflow-hidden shadow-small">
                         <div class="top-circle d-flex flex-row justify-content-center align-items-end">
                             <div class="circle-login bg-3 rounded-circle border border-3 border-white mb-3 overflow-hidden">
-                                <img src="../assets/user.png" alt="user" class="img-fluid">
+                                <img src="../assets/img/avatar-user/default.png" alt="user" class="img-fluid">
                             </div>
                         </div>
                         <div class="card-body p-1">

@@ -4,7 +4,7 @@
             <div class="card text-white bg-1 shadow-small col-12 col-sm-10 col-md-6 mx-auto px-0 border-0">
                 <div class="card-body bg-4 semi-rounded-bottom">
                     <div class="row py-4">
-                        <h3>Administrador de pagos</h3>
+                        <h3>Administrador de tarjetas</h3>
                     </div>
                 </div>
                 <div class="card-body px-4">
@@ -68,8 +68,8 @@
 <script>
 import moment from 'moment'
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex"
-import NavBar from '../components/NavBar.vue';
-import CardMes from '../components/CardMes.vue';
+import NavBar from '@/components/NavBar.vue';
+import CardMes from '@/components/CardMes.vue';
 
 export default {
     components: { CardMes, NavBar },

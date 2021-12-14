@@ -40,11 +40,11 @@
 <script>
 import moment from 'moment'
 import { mapState, mapActions } from "vuex"
-import NavBar from '../components/NavBar.vue'
+import NavBar from '@/components/NavBar.vue'
 
 export default {
     components: {NavBar},
-    name: 'Inicio',
+    name: 'Tarjetas',
     data: function () {
     return {
         name:''

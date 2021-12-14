@@ -2,9 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Inicio from '../views/Inicio.vue'
 import Tarjetas from '../views/Tarjetas.vue'
-import Tarjeta from '../views/Tarjeta.vue'
+import Tarjeta from '../views/Tarjetas/Tarjeta.vue'
 import Calendario from '../views/Calendario.vue'
 import Usuario from '../views/Usuario.vue'
+import MisDatos from '../views/Usuario/MisDatos.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
 
@@ -36,6 +37,11 @@ const routes = [
     path: '/usuario',
     name: 'Usuario',
     component: Usuario
+  },
+  {
+    path: '/usuario/mis-datos',
+    name: 'MisDatos',
+    component: MisDatos
   },
   {
     path: '/login',

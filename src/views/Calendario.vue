@@ -54,8 +54,8 @@
 <script>
 import moment from 'moment'
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex"
-import NavBar from '../components/NavBar.vue'
-import CardMes from '../components/CardMes.vue';
+import NavBar from '@/components/NavBar.vue'
+import CardMes from '@/components/CardMes.vue';
 export default {
     components: { CardMes, NavBar },
     name: 'Calendario',
