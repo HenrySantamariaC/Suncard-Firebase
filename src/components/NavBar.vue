@@ -15,7 +15,7 @@
                         <span class="icon-calendar"></span>
                         <span class="fs-8">Calendario</span>
                     </router-link>
-                    <router-link :to="{name:'Login'}" class="navbar-brand d-flex flex-column col-3 mx-0 bg-7">
+                    <router-link :to="{name:'Usuario'}" class="navbar-brand d-flex flex-column col-3 mx-0 bg-7">
                         <span class="icon-user"></span>
                         <span class="fs-8">Usuario</span>
                     </router-link>

@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Inicio from '../views/Inicio.vue'
-import Calendario from '../views/Calendario.vue'
-import Login from '../views/Login.vue'
-import Registro from '../views/Registro.vue'
 import Tarjetas from '../views/Tarjetas.vue'
 import Tarjeta from '../views/Tarjeta.vue'
+import Calendario from '../views/Calendario.vue'
+import Usuario from '../views/Usuario.vue'
+import Login from '../views/Login.vue'
+import Registro from '../views/Registro.vue'
 
 Vue.use(VueRouter)
 
@@ -14,21 +15,6 @@ const routes = [
     path: '/',
     name: 'Inicio',
     component: Inicio
-  },
-  {
-    path: '/calendario',
-    name: 'Calendario',
-    component: Calendario
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/registro',
-    name: 'Registro',
-    component: Registro
   },
   {
     path: '/tarjetas',
@@ -40,6 +26,26 @@ const routes = [
     name: 'Tarjeta',
     component: Tarjeta,
     props: true,
+  },
+  {
+    path: '/calendario',
+    name: 'Calendario',
+    component: Calendario
+  },
+  {
+    path: '/usuario',
+    name: 'Usuario',
+    component: Usuario
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/registro',
+    name: 'Registro',
+    component: Registro
   },
   // {
   //   path: '/inicio',

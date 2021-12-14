@@ -4,13 +4,13 @@
             <div class="card text-white bg-1 shadow-small col-12 col-sm-10 col-md-6 mx-auto px-0 border-0">
                 <div class="card-body bg-4 semi-rounded-bottom">
                     <div class="row py-4">
-                        <h3>Cronograma de pagos del {{anio}}</h3>
+                        <h3>Calendario de pagos</h3>
                     </div>
                 </div>
                 <div class="card-body m-2">
                     <div class="row rounded-3 bg-7 text-white p-2">
                         <div class="text-white">
-                            <h5 class="fw-bold text-start">Cronograma por año</h5>
+                            <h5 class="fw-bold text-start">Calendario por año</h5>
                             <div class="input-group input-group-sm mb-2">
                                 <label for="tarjeta"  class="input-group-text text-light bg-7 border-0">Tarjeta</label>
                                 <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="py-2">
                                 <div class="btn btn-dark bg-6 text-white" @click="calcularCalendario()">
-                                    Ver cronograma
+                                    Ver calendario
                                 </div>
                             </div>
                         </div>
