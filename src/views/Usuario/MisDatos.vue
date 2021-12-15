@@ -37,7 +37,7 @@
                         <label for="email" class="mx-2">Email</label>
                     </div>
                     <div class="form-floating col-11 mx-auto my-2 px-2">
-                        <input type="date" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " :value="user.birth">
+                        <input type="date" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " v-model="user.birth">
                         <label for="pass" class="mx-2">Fecha de nacimiento</label>
                     </div>
                 </form>
@@ -45,8 +45,8 @@
                     <div class="row rounded-3 bg-7 text-white py-2">
                         <h5 class="text-start text-muted fw-bold">Avatar</h5>
                         <div class="row">
-                            <div class="col-4 py-2" v-for="(item, i) in avatares" :key="i" @click="elegirAvatar(i)">
-                                <img :src="require(`@/assets/img/avatar-user/${item.name}`)" alt="img-avatar" class="img-fluid avatar" :class="{'rounded-circle br-red':item.selected}">
+                            <div class="col-4 py-2" v-for="(item, i) in avatares" :key="i">
+                                <img :src="require(`@/assets/img/avatar-user/${item.name}`)" alt="img-avatar" class="img-fluid avatar" :class="{'rounded-circle br-red':item.selected}" @click="elegirAvatar(i)">
                             </div>
                         </div>
                     </div>
@@ -89,6 +89,7 @@ export default {
       },
       guardarData(){
           this.actualizarUsuario(this.user)
+          this.saveBDLocalStorage()
           this.$router.push({name: "Usuario"});
       },
       elegirAvatar(index){
@@ -97,6 +98,10 @@ export default {
           }
           this.avatares[index].selected = true
           this.user.avatar = index
+      },
+      saveBDLocalStorage() {
+          let parsed = JSON.stringify(this.usuario);
+          localStorage.setItem('user', parsed);
       }
   },
   created(){

@@ -8,6 +8,7 @@ import Usuario from '../views/Usuario.vue'
 import MisDatos from '../views/Usuario/MisDatos.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
+import user from '../store/modules/Usuario'
 
 Vue.use(VueRouter)
 
@@ -15,33 +16,51 @@ const routes = [
   {
     path: '/',
     name: 'Inicio',
-    component: Inicio
+    component: Inicio,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/tarjetas',
     name: 'Tarjetas',
     component: Tarjetas,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/tarjetas/tarjeta/:id',
     name: 'Tarjeta',
     component: Tarjeta,
     props: true,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/calendario',
     name: 'Calendario',
-    component: Calendario
+    component: Calendario,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/usuario',
     name: 'Usuario',
-    component: Usuario
+    component: Usuario,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/usuario/mis-datos',
     name: 'MisDatos',
-    component: MisDatos
+    component: MisDatos,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/login',
@@ -52,12 +71,7 @@ const routes = [
     path: '/registro',
     name: 'Registro',
     component: Registro
-  },
-  // {
-  //   path: '/inicio',
-  //   name: 'Inicio',
-  //   component: Inicio
-  // }
+  }
 ]
 
 const router = new VueRouter({
@@ -66,5 +80,17 @@ const router = new VueRouter({
     return { x: 0, y: 0 }
   }
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (user.state.usuario.logged) {
+      next();
+    } else {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

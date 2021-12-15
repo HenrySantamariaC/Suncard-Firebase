@@ -9,11 +9,29 @@
                 </div>
                 <div class="card-body px-4">
                     <!-- Fecha del dia de hoy -->
-                    <div class="row pb-3">
-                        <p class="card-text my-0 fs-7">Hoy</p>
-                        <h5 class="card-title text-capitalize fs-6">{{mesActual.hoy}}</h5>
+                    <div class="row p-0">
+                        <h5 class="card-title fs-7 fw-bold text-end text-muted">Hoy {{mesActual.hoy}}</h5>
                     </div>
-
+                    <!-- Formulario para ingresar los dias de cierre y pago -->
+                    <div class="row text-body">
+                        <div class=" col rounded-3 w-100 m-1 mx-sm-2 py-1 text-white">
+                            <div class="text-white">
+                                <div class="input-group input-group-sm mb-2">
+                                    <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
+                                        <option 
+                                            class="m-0 p-0"
+                                            v-for="(item,i) in tarjetas" :key="i"
+                                            :value="item.id">{{item.name}}
+                                        </option>
+                                    </select>
+                                    <div class="btn bg-6 text-white" @click="verData">
+                                        Ver datos
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <!-- Dias restantes para la proxima facturacion -->
                         <div class="col-12 col-lg-5 card bg-1 border-0">
@@ -33,29 +51,6 @@
                         <div class="col-12 col-lg-7 pt-2">
                             <div class="mx-sm-4">
                                 <CardMes :mes="mesActual.actual"></CardMes>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Formulario para ingresar los dias de cierre y pago -->
-                    <div class="row py-3 text-body">
-                        <div class=" col rounded-3 bg-7 w-100 my-1 mx-1 mx-sm-2 py-2 text-white shadow">
-                            <div class="text-white">
-                                <h5 class="fw-bold text-start">Elegir tarjeta</h5>
-                                <div class="input-group input-group-sm mb-2">
-                                    <label for="tarjeta"  class="input-group-text text-light bg-7 border-0">Tarjeta</label>
-                                    <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
-                                        <option 
-                                            class="m-0 p-0"
-                                            v-for="(item,i) in tarjetas" :key="i"
-                                            :value="item.id">{{item.name}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="py-2">
-                                    <div class="btn btn-dark bg-6 text-white" @click="verData">
-                                        Ver datos
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,12 +86,13 @@ export default {
   computed: {
         ...mapGetters('Tarjetas',['getTarjetaId']),
         ...mapState('Tarjetas',['tarjetas']),
+        ...mapState('Usuario',['usuario']),
   },
   methods: {
-      ...mapActions('Calendario',['calcularCalendarioPagos']),
+      ...mapActions('Tarjetas',['cargarDatos']),
     cargarFechaActual() {
         moment.locale("es")
-        this.mesActual.hoy = moment().format('D [de] MMMM [del] YYYY');
+        this.mesActual.hoy = moment().format('D/M/YYYY');
         this.mesActual.anio = moment().get('year');
     },
     cargarTarjeta(id){
@@ -148,12 +144,29 @@ export default {
     verData(){
         this.cargarTarjeta(this.idTarjeta)
         this.diasRestantes()
+    },
+    loadBDLocalStorage(){
+        if (localStorage.getItem('user')) {
+            try {
+                this.actualizarUsuario( JSON.parse(localStorage.getItem('user')) )
+            } catch(e) {
+                localStorage.removeItem('user');
+            }
+        }
+        if (localStorage.getItem('card')) {
+            try {
+                this.cargarDatos( JSON.parse(localStorage.getItem('card')) )
+            } catch(e) {
+                localStorage.removeItem('card');
+            }
+        }
     }
   },
   created() {
     this.cargarFechaActual();
     this.cargarTarjeta(this.idTarjeta);
     this.diasRestantes();
+    this.loadBDLocalStorage();
   }
 }
 </script>

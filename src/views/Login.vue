@@ -15,17 +15,20 @@
                         </div>
                         <form class="card-body px-0 text-body">
                             <div class="form-floating col-11 mx-auto my-2 px-2">
-                                <input type="text" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" " autocomplete="username">
-                                <label for="nombre" class="mx-2">Nombre</label>
+                                <input type="email" class="form-control border-0 border-bottom border-danger" id="nombre" placeholder=" " autocomplete="email" v-model="user.email">
+                                <label for="nombre" class="mx-2">Email</label>
                             </div>
                             <div class="form-floating col-11 mx-auto my-2 px-2">
-                                <input type="password" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " autocomplete="current-password">
+                                <input type="password" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " autocomplete="current-password" v-model="user.pass">
                                 <label for="pass" class="mx-2">Contraseña</label>
                             </div>
                             <div class="w-100 mt-4">
-                                <router-link class="bg-4 text-light mx-auto py-2 px-5 rounded-pill" :to="{name:'Inicio'}">Entrar</router-link>
+                                <div class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="login()">Entrar</div>
                             </div>
                         </form>
+                        <div class="card-body p-0" v-if="errroLogin">
+                            <h6 class="text-danger m-0">Error al iniciar sesion</h6>
+                        </div>
                         <div class="card-body py-4 my-3">
                             <h6>¿Nuevo usuario? <router-link  :to="{name:'Registro'}" class="text-danger">Registrate</router-link></h6>
                         </div>
@@ -36,11 +39,49 @@
     </div>
 </template>
 <script>
+import { mapState, mapActions, mapGetters } from "vuex"
 export default {
     name: 'Login',
     data: function () {
     return {
+        errroLogin: false,
+        user: {
+            email: '',
+            pass: ''
+        }
       }
+    },
+    computed: {
+        ...mapState('Usuario',['usuario']),
+    },
+    methods: {
+        ...mapActions('Usuario',['iniciarSesion','actualizarUsuario']),
+        login(){
+            this.iniciarSesion(this.user)
+            if (this.usuario.logged) {
+                this.errroLogin = false
+                this.saveBDLocalStorage()
+                this.$router.push({name: "Inicio"});
+            }else{
+                this.errroLogin = true
+            }
+        },
+        loadBDLocalStorage(){
+            if (localStorage.getItem('user')) {
+                try {
+                    this.actualizarUsuario( JSON.parse(localStorage.getItem('user')) )
+                } catch(e) {
+                    localStorage.removeItem('user');
+                }
+            }
+        },
+        saveBDLocalStorage() {
+            let parsed = JSON.stringify(this.usuario);
+            localStorage.setItem('user', parsed);
+        }
+    },
+    created() {
+        this.loadBDLocalStorage()
     }
 }
 </script>

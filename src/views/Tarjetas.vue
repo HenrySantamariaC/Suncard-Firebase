@@ -25,7 +25,7 @@
                                 <li class="list-group-item rounded-3 bg-7 my-1 mx-1 mx-sm-2 text-white shadow" v-for="(tarjeta,i) in tarjetas" :key="i">
                                     <router-link :to="{name:'Tarjeta', params:{id:tarjeta.id}}" class="text-decoration-none text-white">
                                         <h6 class="fw-bold text-start">{{tarjeta.name}}</h6>
-                                        <h6 class="text-muted text-start fs-7 mx-2">Tarjeta de crédito</h6>
+                                        <h6 class="text-muted text-start fs-7 mx-2">{{getNumeroTarjeta(tarjeta.id)}}</h6>
                                     </router-link>
                                 </li>
                             </ul>
@@ -39,7 +39,7 @@
 </template>
 <script>
 import moment from 'moment'
-import { mapState, mapActions } from "vuex"
+import { mapState, mapActions, mapGetters } from "vuex"
 import NavBar from '@/components/NavBar.vue'
 
 export default {
@@ -52,6 +52,7 @@ export default {
   },
   computed: {
       ...mapState('Tarjetas',['tarjetas']),
+      ...mapGetters('Tarjetas',['getNumeroTarjeta']),
   },
   methods: {
   }

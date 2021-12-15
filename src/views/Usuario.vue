@@ -10,12 +10,12 @@
                 <div class="card-body px-4">
                     <div class="row text-white p-2">
                         <div class="col">
-                            <img :src="require(`../assets/img/avatar-user/${img}`)" alt="user" class="circle-login img-thumbnail img-fluid rounded-circle user-select-none">
+                            <img :src="require(`../assets/img/avatar-user/${avatares[usuario.avatar].name}`)" alt="user" class="circle-login img-thumbnail img-fluid rounded-circle user-select-none">
                         </div>
                     </div>
                     <div class="row text-white p-2">
                         <div class="col">
-                            <h5 class="fw-bold">Erick SC</h5>
+                            <h5 class="fw-bold">{{getName}}</h5>
                         </div>
                     </div>  
                 </div>
@@ -34,10 +34,10 @@
                             <span class="icon-link me-2"></span>
                             <span>Acerca de</span>
                         </router-link>
-                        <router-link :to="{name:'Login'}" class="col-12 btn text-start text-white py-2">
+                        <div class="col-12 btn text-start text-white py-2" @click="logout()">
                             <span class="icon-exit me-2"></span>
                             <span>Cerrar sesión</span>
-                        </router-link>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body px-4">
@@ -50,19 +50,36 @@
 </template>
 <script>
 import NavBar from '@/components/NavBar.vue'
+import { mapState, mapActions, mapGetters } from "vuex"
 export default {
     components: {NavBar},
     name: 'Usuario',
     data: function(){
         return{
-            img: 'user-1.png'
+            avatares: [
+                {name: 'user-1.png', selected: false},
+                {name: 'user-2.png', selected: false},
+                {name: 'user-3.png', selected: false},
+                {name: 'user-4.png', selected: false},
+                {name: 'user-5.png', selected: false},
+                {name: 'user-6.png', selected: false},
+            ]
         }
     },
+    computed: {
+      ...mapState('Usuario',['usuario']),
+      ...mapGetters('Usuario',['getName']),
+    },
     methods: {
+        ...mapActions('Usuario',['cerrarSesion']),
         getCopy(){
             let now = new Date()
             let cad = '© ' + now.getFullYear() +' SunCard. All Right Reserved'
             return cad
+        },
+        logout(){
+            this.cerrarSesion()
+            this.$router.push({name: "Login"});
         }
     }
 }

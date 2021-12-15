@@ -7,12 +7,37 @@ export default {
                 name: 'Tarjeta Visa',
                 cierre: 22,
                 pago: 16,
+                ultimosDigitos: 1234,
                 anio: 2021,
                 servicios: [
-                    'Luz',
-                    'Agua',
-                    'Moto',
-                    'Movistar',
+                    {
+                        name: 'Luz',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Agua',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Moto',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Movistar',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    }
                 ]
             },
             {
@@ -20,12 +45,37 @@ export default {
                 name: 'Tarjeta American Express',
                 cierre: 20,
                 pago: 14,
+                ultimosDigitos: 9876,
                 anio: 2021,
                 servicios: [
-                    'Luz',
-                    'Agua',
-                    'Gas',
-                    'Claro',
+                    {
+                        name: 'Luz',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Agua',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Gas',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Claro',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    }
                 ]
             },
             {
@@ -33,11 +83,30 @@ export default {
                 name: 'Tarjeta Mastercad',
                 cierre: 18,
                 pago: 12,
+                ultimosDigitos: 1357,
                 anio: 2021,
                 servicios: [
-                    'Luz',
-                    'Agua',
-                    'Internet',
+                    {
+                        name: 'Luz',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Agua',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    },
+                    {
+                        name: 'Internet',
+                        check: {
+                            date: '',
+                            state: false
+                        }
+                    }
                 ]
             }
         ]
@@ -64,6 +133,9 @@ export default {
                     state.tarjetas.splice(i,1)
                 }                
             }
+        },
+        loadData(state, tarjetas){
+            state.tarjetas = tarjetas
         }
     },
     actions: {
@@ -75,6 +147,9 @@ export default {
         },
         eliminarTarjeta({commit},tarjeta) {
             commit('deleteTarjeta',tarjeta)
+        },
+        cargarDatos({commit},tarjetas){
+            commit('loadData',tarjetas)
         }
     },
     getters: {
@@ -85,6 +160,17 @@ export default {
                 }
             }
             return {}
+        },
+        getNumeroTarjeta: (state) =>(id) =>{
+            for (let i = 0; i < state.tarjetas.length; i++) {
+                if (state.tarjetas[i].id == id) {
+                    if (state.tarjetas[i].ultimosDigitos!=='') {
+                        return 'XXXX-XXXX-XXXX-'+state.tarjetas[i].ultimosDigitos
+                    }else{
+                        return 'XXXX-XXXX-XXXX-XXXX' 
+                    }
+                }
+            }   
         }
     }
 }
