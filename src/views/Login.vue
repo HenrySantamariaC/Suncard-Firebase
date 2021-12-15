@@ -67,17 +67,28 @@ export default {
             }
         },
         loadBDLocalStorage(){
-            if (localStorage.getItem('user')) {
+            if (localStorage.getItem("user")) {
                 try {
-                    this.actualizarUsuario( JSON.parse(localStorage.getItem('user')) )
+                    this.actualizarUsuario( JSON.parse(localStorage.getItem("user")) )
                 } catch(e) {
-                    localStorage.removeItem('user');
+                    localStorage.removeItem("user");
                 }
             }
+            if (localStorage.getItem("card")) {
+                try {
+                    this.cargarDatos( JSON.parse(localStorage.getItem("card")) )
+                } catch(e) {
+                    localStorage.removeItem("card");
+                }
+            }
+            if (this.usuario.logged) {
+                this.$router.push({name: "Inicio"});
+            }
+                console.log(localStorage.getItem("user"))
         },
         saveBDLocalStorage() {
             let parsed = JSON.stringify(this.usuario);
-            localStorage.setItem('user', parsed);
+            localStorage.setItem("user", parsed);
         }
     },
     created() {
