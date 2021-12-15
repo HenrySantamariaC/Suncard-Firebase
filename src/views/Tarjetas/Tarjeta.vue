@@ -166,7 +166,7 @@ export default {
       },
       saveBDLocalStorage() {
           let parsed = JSON.stringify(this.tarjetas);
-          localStorage.setItem('card', parsed);
+          localStorage.setItem("card", parsed);
       }
   },
   created(){

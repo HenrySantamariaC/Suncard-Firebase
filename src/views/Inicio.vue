@@ -144,29 +144,12 @@ export default {
     verData(){
         this.cargarTarjeta(this.idTarjeta)
         this.diasRestantes()
-    },
-    loadBDLocalStorage(){
-        if (localStorage.getItem('user')) {
-            try {
-                this.actualizarUsuario( JSON.parse(localStorage.getItem('user')) )
-            } catch(e) {
-                localStorage.removeItem('user');
-            }
-        }
-        if (localStorage.getItem('card')) {
-            try {
-                this.cargarDatos( JSON.parse(localStorage.getItem('card')) )
-            } catch(e) {
-                localStorage.removeItem('card');
-            }
-        }
     }
   },
   created() {
     this.cargarFechaActual();
     this.cargarTarjeta(this.idTarjeta);
     this.diasRestantes();
-    this.loadBDLocalStorage();
   }
 }
 </script>

@@ -53,9 +53,11 @@ export default {
     },
     computed: {
         ...mapState('Usuario',['usuario']),
+        ...mapState('Tarjetas',['tarjetas']),
     },
     methods: {
         ...mapActions('Usuario',['iniciarSesion','actualizarUsuario']),
+        ...mapActions('Tarjetas',['cargarDatos']),
         login(){
             this.iniciarSesion(this.user)
             if (this.usuario.logged) {
@@ -84,11 +86,12 @@ export default {
             if (this.usuario.logged) {
                 this.$router.push({name: "Inicio"});
             }
-                console.log(localStorage.getItem("user"))
         },
         saveBDLocalStorage() {
-            let parsed = JSON.stringify(this.usuario);
-            localStorage.setItem("user", parsed);
+            let us = JSON.stringify(this.usuario);
+            localStorage.setItem("user", us);
+            let cd = JSON.stringify(this.tarjetas);
+            localStorage.setItem("card", cd);
         }
     },
     created() {

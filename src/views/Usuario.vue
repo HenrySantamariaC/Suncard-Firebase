@@ -68,6 +68,7 @@ export default {
     },
     computed: {
       ...mapState('Usuario',['usuario']),
+      ...mapState('Tarjetas',['tarjetas']),
       ...mapGetters('Usuario',['getName']),
     },
     methods: {
@@ -79,7 +80,14 @@ export default {
         },
         logout(){
             this.cerrarSesion()
+            this.saveBDLocalStorage()
             this.$router.push({name: "Login"});
+        },
+        saveBDLocalStorage() {
+            let us = JSON.stringify(this.usuario);
+            localStorage.setItem("user", us);
+            let cd = JSON.stringify(this.tarjetas);
+            localStorage.setItem("card", cd);
         }
     }
 }

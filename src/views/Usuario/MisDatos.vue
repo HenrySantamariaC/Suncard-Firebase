@@ -100,8 +100,8 @@ export default {
           this.user.avatar = index
       },
       saveBDLocalStorage() {
-          let parsed = JSON.stringify(this.usuario);
-          localStorage.setItem('user', parsed);
+        let us = JSON.stringify(this.usuario);
+        localStorage.setItem("user", us);
       }
   },
   created(){

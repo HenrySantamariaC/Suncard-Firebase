@@ -1,16 +1,7 @@
 export default {
     namespaced: true,
     state: {
-        usuario: {
-            name: 'User 1',
-            lasNameP: 'Lorem',
-            lasNameM: 'Ipsum',
-            email: 'admin@user.com',
-            pass: 'admin',
-            birth: '2000-01-01',
-            avatar: 0,
-            logged: false
-        }
+        usuario: {}
     },
     mutations: {
         login(state, usuario){

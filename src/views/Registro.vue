@@ -68,24 +68,10 @@ export default {
                 this.actualizarUsuario(this.user)
                 this.iniciarSesion(this.user)
                 this.errroLogin = false
-                this.saveBDLocalStorage()
                 this.$router.push({name: "Inicio"});
             }else{
                 this.errroLogin = true
             }
-        },
-        loadBDLocalStorage(){
-            if (localStorage.getItem('user')) {
-                try {
-                    this.actualizarUsuario( JSON.parse(localStorage.getItem('user')) )
-                } catch(e) {
-                    localStorage.removeItem('user');
-                }
-            }
-        },
-        saveBDLocalStorage() {
-            let parsed = JSON.stringify(this.usuario);
-            localStorage.setItem('user', parsed);
         }
     }
 }
