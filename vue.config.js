@@ -1,5 +1,5 @@
 module.exports = {
-    publicPath: '/SunCard/',
+    publicPath: '/Suncard-Firebase/',
 
     pwa: {
       name: 'SunCard',
