@@ -22,8 +22,19 @@
                                 <input type="password" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " autocomplete="current-password" v-model="user.pass">
                                 <label for="pass" class="mx-2">Contraseña</label>
                             </div>
+                            <div class="col-11 mx-auto my-2 px-2 text-white">
+                                <div class="w-50 m-auto">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">Recordarme</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="w-100 mt-4">
-                                <div class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="login()">Entrar</div>
+                                <div class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="login()">
+                                    <span class="spinner-border spinner-border-sm" :class="loadLogin" role="status" aria-hidden="true"></span>
+                                    Entrar
+                                </div>
                             </div>
                         </form>
                         <div class="card-body p-0" v-if="errroLogin">
@@ -39,63 +50,41 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from "vuex"
+import { mapActions, mapState } from "vuex"
+import { CrudUser, UserSession } from '../scripts/Firebase';
 export default {
     name: 'Login',
     data: function () {
     return {
+        loadLogin: 'd-none',
         errroLogin: false,
-        user: {
-            email: '',
-            pass: ''
-        }
+        user: {email: '', pass: ''}
       }
     },
     computed: {
-        ...mapState('Usuario',['usuario']),
-        ...mapState('Tarjetas',['tarjetas']),
+        ...mapState('Usuario',['usuario'])
     },
     methods: {
-        ...mapActions('Usuario',['iniciarSesion','actualizarUsuario']),
-        ...mapActions('Tarjetas',['cargarDatos']),
-        login(){
-            this.iniciarSesion(this.user)
-            if (this.usuario.logged) {
-                this.errroLogin = false
-                this.saveBDLocalStorage()
-                this.$router.push({name: "Inicio"});
-            }else{
+        ...mapActions('Usuario',['estadoSesion','actualizarUsuario']),
+        async login(){
+            this.loadLogin = ''
+            this.errroLogin = false
+            try {
+                await UserSession.loginUserWithFirebaseEmail(this.user.email, this.user.pass)
+                let userC = await CrudUser.readDataUser()
+                this.actualizarUsuario(userC)
+                console.log('login');
+                console.log(this.usuario);
+                this.estadoSesion(true)
+                this.$router.push({name:"Inicio"})
+            } catch (error) {
+                this.loadLogin = 'd-none'
                 this.errroLogin = true
+                console.log(error.message);
             }
-        },
-        loadBDLocalStorage(){
-            if (localStorage.getItem("user")) {
-                try {
-                    this.actualizarUsuario( JSON.parse(localStorage.getItem("user")) )
-                } catch(e) {
-                    localStorage.removeItem("user");
-                }
-            }
-            if (localStorage.getItem("card")) {
-                try {
-                    this.cargarDatos( JSON.parse(localStorage.getItem("card")) )
-                } catch(e) {
-                    localStorage.removeItem("card");
-                }
-            }
-            if (this.usuario.logged) {
-                this.$router.push({name: "Inicio"});
-            }
-        },
-        saveBDLocalStorage() {
-            let us = JSON.stringify(this.usuario);
-            localStorage.setItem("user", us);
-            let cd = JSON.stringify(this.tarjetas);
-            localStorage.setItem("card", cd);
         }
     },
     created() {
-        this.loadBDLocalStorage()
     }
 }
 </script>

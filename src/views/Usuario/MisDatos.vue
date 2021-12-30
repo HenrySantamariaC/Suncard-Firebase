@@ -85,7 +85,11 @@ export default {
       ...mapActions('Usuario',['actualizarUsuario']),
       cargarData(){
           this.user = JSON.parse( JSON.stringify( this.usuario ) )
-          this.avatares[this.user.avatar].selected = true
+          for (let i = 0; i < this.avatares.length; i++) {
+            if (this.avatares[i].name === this.user.avatar) {
+                this.avatares[i].selected = true
+            }
+          }
       },
       guardarData(){
           this.actualizarUsuario(this.user)
@@ -97,7 +101,7 @@ export default {
             this.avatares[i].selected = false  
           }
           this.avatares[index].selected = true
-          this.user.avatar = index
+          this.user.avatar = this.avatares[index].name
       },
       saveBDLocalStorage() {
         let us = JSON.stringify(this.usuario);

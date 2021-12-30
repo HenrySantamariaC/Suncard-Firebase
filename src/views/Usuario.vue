@@ -10,7 +10,7 @@
                 <div class="card-body px-4">
                     <div class="row text-white p-2">
                         <div class="col">
-                            <img :src="require(`../assets/img/avatar-user/${avatares[usuario.avatar].name}`)" alt="user" class="circle-login img-thumbnail img-fluid rounded-circle user-select-none">
+                            <img :src="require(`../assets/img/avatar-user/${usuario.avatar}`)" alt="user" class="circle-login img-thumbnail img-fluid rounded-circle user-select-none">
                         </div>
                     </div>
                     <div class="row text-white p-2">
@@ -25,10 +25,10 @@
                             <span class="icon-profile me-2"></span>
                             <span>Mis datos</span>
                         </router-link>
-                        <router-link :to="{name:''}" class="col-12 btn text-start text-white py-2">
+                        <div class="col-12 btn text-start text-white py-2" @click="crud()">
                             <span class="icon-cog me-2"></span>
                             <span>Configuraciones</span>
-                        </router-link>
+                        </div>
                         <hr class="my-1">
                         <router-link :to="{name:''}" class="col-12 btn text-start text-white py-2">
                             <span class="icon-link me-2"></span>
@@ -51,6 +51,7 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import { mapState, mapActions, mapGetters } from "vuex"
+import { UserSession, CrudUser } from '../scripts/Firebase'
 export default {
     components: {NavBar},
     name: 'Usuario',
@@ -68,20 +69,29 @@ export default {
     },
     computed: {
       ...mapState('Usuario',['usuario']),
-      ...mapState('Tarjetas',['tarjetas']),
-      ...mapGetters('Usuario',['getName']),
+      ...mapGetters('Usuario',['getName'])
     },
     methods: {
-        ...mapActions('Usuario',['cerrarSesion']),
+        ...mapActions('Usuario',['cerrarSesion', 'actualizarUsuario']),
         getCopy(){
             let now = new Date()
             let cad = '© ' + now.getFullYear() +' SunCard. All Right Reserved'
             return cad
         },
-        logout(){
-            this.cerrarSesion()
-            this.saveBDLocalStorage()
-            this.$router.push({name: "Login"});
+        async logout(){
+            try {
+                await UserSession.logoutUserWithFirebaseEmail()
+                console.log('logout');
+                this.$router.push({name:"Login"})
+            } catch (error) {
+                console.log(error.code);
+                console.log(error.message);
+            }
+        },
+        async crud(){
+            let user1 = await CrudUser.readDataUser()
+            this.actualizarUsuario(user1)
+            console.log(user1);
         },
         saveBDLocalStorage() {
             let us = JSON.stringify(this.usuario);
@@ -89,7 +99,7 @@ export default {
             let cd = JSON.stringify(this.tarjetas);
             localStorage.setItem("card", cd);
         }
-    }
+    },
 }
 </script>
 <style>

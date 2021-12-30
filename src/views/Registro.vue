@@ -22,8 +22,19 @@
                                 <input type="password" class="form-control border-0 border-bottom border-danger" id="pass" placeholder=" " autocomplete="new-password" v-model="user.pass">
                                 <label for="pass" class="mx-2">Contraseña</label>
                             </div>
+                            <div class="col-11 mx-auto my-2 px-2 text-white">
+                                <div class="w-50 m-auto">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">Recordarme</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="w-100 mt-4">
-                                <div class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="register()">Registrar</div>
+                                <div class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="register()">
+                                    <span class="spinner-border spinner-border-sm" :class="loadLogin" role="status" aria-hidden="true"></span>
+                                    Registrar
+                                </div>
                             </div>
                         </form>
                         <div class="card-body p-0" v-if="errroLogin">
@@ -40,10 +51,12 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from "vuex"
+import {UserSession} from '../scripts/Firebase';
 export default {
     name: 'Registro',
     data: function () {
     return {
+        loadLogin: 'd-none',
         errroLogin: false,
         user: {
             name: 'User 1',
@@ -61,16 +74,19 @@ export default {
         ...mapState('Usuario',['usuario']),
     },
     methods: {
-        ...mapActions('Usuario',['iniciarSesion','actualizarUsuario']),
-        register(){
-            this.iniciarSesion(this.user)
-            if (this.user.email !== '' && this.user.pass !== '') {
-                this.actualizarUsuario(this.user)
-                this.iniciarSesion(this.user)
-                this.errroLogin = false
-                this.$router.push({name: "Inicio"});
-            }else{
+        ...mapActions('Usuario',['estadoSesion','actualizarUsuario']),
+        async register(){
+            this.loadLogin = ''
+            this.errroLogin = false
+            try {
+                await UserSession.registerUserFirebaseEmail(this.user.email,this.user.pass)
+                console.log('register');
+                this.estadoSesion(true)
+                this.$router.push({name:"Inicio"})
+            } catch (error) {
+                this.loadLogin = 'd-none'
                 this.errroLogin = true
+                console.log(error.message);
             }
         }
     }

@@ -1,15 +1,13 @@
+import User from "../../models/Usuario"
+
 export default {
     namespaced: true,
     state: {
-        usuario: {}
+        usuario: new User()
     },
     mutations: {
-        login(state, usuario){
-            if (usuario.email == state.usuario.email && usuario.pass == state.usuario.pass) {
-                state.usuario.logged = true
-            }else{
-                state.usuario.logged =  false
-            }
+        logged(state, session){
+            state.usuario.logged = session
         },
         logout(state){
             state.usuario.logged = false
@@ -19,8 +17,8 @@ export default {
         },
     },
     actions: {
-        iniciarSesion({commit},usuario) {
-            commit('login',usuario)
+        estadoSesion({commit},session) {
+            commit('logged',session)
         },
         cerrarSesion({commit}) {
             commit('logout')
@@ -31,11 +29,11 @@ export default {
     },
     getters: {
         getName(state) {
-            let name = state.usuario.name.split(' ')[0]
-            let lnAp = state.usuario.lasNameP.length > 1 ? state.usuario.lasNameP.charAt(0) : ''
-            let lnAm = state.usuario.lasNameM.length > 1 ? state.usuario.lasNameM.charAt(0) : ''
+        //     let name = state.usuario.name.split(' ')[0]
+        //     let lnAp = state.usuario.lasNameP.length > 1 ? state.usuario.lasNameP.charAt(0) : ''
+        //     let lnAm = state.usuario.lasNameM.length > 1 ? state.usuario.lasNameM.charAt(0) : ''
 
-            return name + ' ' + lnAp.toUpperCase() + lnAm.toUpperCase()
+        //     return name + ' ' + lnAp.toUpperCase() + lnAm.toUpperCase()
         }
     }
 }

@@ -88,8 +88,9 @@ router.beforeEach((to, from, next) => {
     } else {
       next({ name: "Login" });
     }
+    
   } else {
-    next();
+      next();
   }
 });
 
