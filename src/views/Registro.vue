@@ -31,10 +31,10 @@
                                 </div>
                             </div>
                             <div class="w-100 mt-4">
-                                <div class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="register()">
+                                <button class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="register()" :disabled="!loadLogin">
                                     <span class="spinner-border spinner-border-sm" :class="loadLogin" role="status" aria-hidden="true"></span>
                                     Registrar
-                                </div>
+                                </button>
                             </div>
                         </form>
                         <div class="card-body p-0" v-if="errroLogin">

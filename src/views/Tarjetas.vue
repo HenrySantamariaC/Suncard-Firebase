@@ -9,11 +9,11 @@
                     <div class="row d-flex justify-content-center">
                         <div class="row">
                             <span>Agregar</span>
-                            <router-link :to="{name:'Tarjeta',params:{id:0}}" class="text-decoration-none">
+                            <div class="text-decoration-none" @click="uidCard()">
                                 <h6 class="btn-circle bg-3 text-white rounded-circle m-auto fw-bold">
                                     <span class="icon-plus"></span>
                                 </h6>
-                            </router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,6 +41,7 @@
 import moment from 'moment'
 import { mapState, mapActions, mapGetters } from "vuex"
 import NavBar from '@/components/NavBar.vue'
+import { CrudCard } from "@/scripts/Firebase"
 
 export default {
     components: {NavBar},
@@ -55,6 +56,12 @@ export default {
       ...mapGetters('Tarjetas',['getNumeroTarjeta']),
   },
   methods: {
+      async uidCard() {
+          let uid = await CrudCard.getUidCard()
+          this.$router.push({name:"Tarjeta", params:{id:uid}})
+      },
+  },
+  created(){
   }
 }
 </script>

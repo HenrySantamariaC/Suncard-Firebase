@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { getDatabase, onValue, ref, set, push, child } from "firebase/database";
 import Usuario from "../models/Usuario";
+import Tarjeta from "../models/Tarjeta";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -60,7 +61,6 @@ async function readDataUser() {
     return newUser
 }
 async function writeDataUser() {
-    // let uid = push(child(ref(database), 'users/'+auth.currentUser.uid)).key;
     await set(ref(database, 'users/' + auth.currentUser.uid), {
         data: {
             lasNameP: 'Santamaria',
@@ -74,4 +74,43 @@ async function writeDataUser() {
 export const CrudUser = {
     writeDataUser,
     readDataUser
+}
+
+async function getUidCard() {
+    let uid = push(child(ref(database), 'users/'+auth.currentUser.uid+'/cards')).key;
+    return uid
+}
+
+async function createCard( card ) {
+    await set(ref(database,'users/'+auth.currentUser.uid+'/cards/'+card.id), {
+        name: card.name,
+        cierre: card.cierre,
+        pago: card.pago,
+        ultimosDigitos: card.ultimosDigitos,
+    });
+    console.log('Tarjeta creada');
+}
+
+async function readAllCards() {
+    let allCards = []
+    onValue(ref(database,'users/'+auth.currentUser.uid+'/cards'),(snapshot)=>{
+        let data = snapshot.val()
+        for (let i = 0; i < Object.keys(data).length; i++) {
+            let card = new Tarjeta()    
+            let key = Object.keys(data)[i]
+            card.id = key
+            card.name = data[key].name        
+            card.cierre = data[key].cierre        
+            card.pago = data[key].pago        
+            card.ultimosDigitos = data[key].ultimosDigitos     
+            allCards.push(card)   
+        }
+    })
+    return allCards
+}
+
+export const CrudCard = {
+    getUidCard,
+    createCard,
+    readAllCards
 }

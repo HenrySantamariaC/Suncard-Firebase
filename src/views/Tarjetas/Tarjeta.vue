@@ -87,20 +87,15 @@
 import moment from 'moment'
 import { mapState, mapActions, mapGetters } from "vuex"
 import NavBar from '@/components/NavBar.vue'
+import Tarjeta from "../../models/Tarjeta";
+import { CrudCard } from "@/scripts/Firebase";
 
 export default {
     components: {NavBar},
     name: 'Tarjeta',
     data: function () {
     return {
-        tarjeta:{
-            id:0,
-            name: 'Tarjeta Visa',
-            cierre: 22,
-            pago: 16,
-            ultimosDigitos: 1111,
-            servicios: []
-        },
+        tarjeta: new Tarjeta(),
         creada: false,
         servicio: {
             name: '',
@@ -148,11 +143,12 @@ export default {
       eliminarServicio(index){
           this.tarjeta.servicios.splice(index,1)
       },
-      guardarData(){
+      async guardarData(){
           if (this.creada) {
               this.actualizarTarjeta(this.tarjeta)
           }else {
-              this.agregarTarjeta(this.tarjeta)
+              this.tarjeta.id = this.id
+              await CrudCard.createCard(this.tarjeta)
           }
           this.saveBDLocalStorage()
           this.$router.push({name: "Tarjetas"});

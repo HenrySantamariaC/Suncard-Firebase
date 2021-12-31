@@ -20,7 +20,9 @@
                                     <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
                                         <option 
                                             class="m-0 p-0"
-                                            v-for="(item,i) in tarjetas" :key="i"
+                                            v-for="(item,i) in tarjetas" 
+                                            :key="i"
+                                            :selected="selectedCard(i)"
                                             :value="item.id">{{item.name}}
                                         </option>
                                     </select>
@@ -98,6 +100,12 @@ export default {
     cargarTarjeta(id){
         this.tarjeta = JSON.parse( JSON.stringify( this.getTarjetaId(id) ) )
     }, 
+    selectedCard(i){
+        if (i == 0) {
+            return true
+        }
+        return false
+    },
     calcularMes(i,anio){
         // Calculamos fechas de cierre y de pago
         let fc = moment().locale("es")

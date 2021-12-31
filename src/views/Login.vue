@@ -31,10 +31,10 @@
                                 </div>
                             </div>
                             <div class="w-100 mt-4">
-                                <div class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="login()">
+                                <button class="btn bg-4 text-light mx-auto py-2 px-5 rounded-pill" @click="login()" :disabled="!loadLogin">
                                     <span class="spinner-border spinner-border-sm" :class="loadLogin" role="status" aria-hidden="true"></span>
                                     Entrar
-                                </div>
+                                </button>
                             </div>
                         </form>
                         <div class="card-body p-0" v-if="errroLogin">
@@ -51,7 +51,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex"
-import { CrudUser, UserSession } from '../scripts/Firebase';
+import { CrudUser, CrudCard, UserSession } from '../scripts/Firebase';
 export default {
     name: 'Login',
     data: function () {
@@ -66,15 +66,17 @@ export default {
     },
     methods: {
         ...mapActions('Usuario',['estadoSesion','actualizarUsuario']),
+        ...mapActions('Tarjetas',['cargarDatos']),
         async login(){
             this.loadLogin = ''
             this.errroLogin = false
             try {
                 await UserSession.loginUserWithFirebaseEmail(this.user.email, this.user.pass)
                 let userC = await CrudUser.readDataUser()
+                let tarjetasC = await CrudCard.readAllCards()
                 this.actualizarUsuario(userC)
+                this.cargarDatos(tarjetasC)
                 console.log('login');
-                console.log(this.usuario);
                 this.estadoSesion(true)
                 this.$router.push({name:"Inicio"})
             } catch (error) {
