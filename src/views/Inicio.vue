@@ -17,12 +17,11 @@
                         <div class=" col rounded-3 w-100 m-1 mx-sm-2 py-1 text-white">
                             <div class="text-white">
                                 <div class="input-group input-group-sm mb-2">
-                                    <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta">
+                                    <select id="tarjeta" class="form-select bg-7 text-white dark" v-model="idTarjeta" @change="verData">
                                         <option 
                                             class="m-0 p-0"
                                             v-for="(item,i) in tarjetas" 
                                             :key="i"
-                                            :selected="selectedCard(i)"
                                             :value="item.id">{{item.name}}
                                         </option>
                                     </select>
@@ -100,12 +99,6 @@ export default {
     cargarTarjeta(id){
         this.tarjeta = JSON.parse( JSON.stringify( this.getTarjetaId(id) ) )
     }, 
-    selectedCard(i){
-        if (i == 0) {
-            return true
-        }
-        return false
-    },
     calcularMes(i,anio){
         // Calculamos fechas de cierre y de pago
         let fc = moment().locale("es")
@@ -152,12 +145,21 @@ export default {
     verData(){
         this.cargarTarjeta(this.idTarjeta)
         this.diasRestantes()
+    },
+    tarjetaDefault(){
+        if (this.tarjetas.length > 0) {
+            this.idTarjeta = this.tarjetas[0].id
+            this.verData()
+        }
     }
   },
   created() {
     this.cargarFechaActual();
     this.cargarTarjeta(this.idTarjeta);
     this.diasRestantes();
+  },
+  mounted() {
+      this.tarjetaDefault()
   }
 }
 </script>
